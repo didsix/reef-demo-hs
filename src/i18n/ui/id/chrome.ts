@@ -15,7 +15,7 @@ export const idChrome = {
     closeMenu: "Tutup menu",
     switchLanguage: "Ganti bahasa",
     toggleTheme: "Ganti tema",
-    subscribe: "Berlangganan",
+    subscribe: "Pesan",
   },
 
   footer: {
