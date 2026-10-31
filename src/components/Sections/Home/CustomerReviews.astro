@@ -1,0 +1,105 @@
+---
+// src/components/Sections/Home/CustomerReviews.astro - avis clients et temoignages avec etoiles sur l'accueil.
+import SectionHeader from "@components/Sections/Global/SectionHeader.astro";
+import { getLocale } from "@i18n";
+import { annotationsDe, styleDuBloc } from "@moteur/annotations";
+import Pastilles from "@moteur/Pastilles.astro";
+
+const locale = getLocale(Astro);
+const ed = annotationsDe(Astro, "customer-reviews");
+const isEn = locale === "en";
+
+const reviews = isEn
+  ? [
+      {
+        name: "Ayu F.",
+        role: "Family traveler",
+        quote:
+          "The room was spotless, the atmosphere felt peaceful, and the kids loved the pool. It felt like a comfortable home away from home.",
+      },
+      {
+        name: "Rizky D.",
+        role: "Weekend guest",
+        quote:
+          "Perfect for a relaxed staycation in Lebak. The surroundings were calm, and the facilities were simple but very practical for a family trip.",
+      },
+      {
+        name: "Siti M.",
+        role: "Couple stay",
+        quote:
+          "We wanted a quiet place to rest and enjoy the weekend. Olan Homestay gave us exactly that: clean, comfortable, and easy to access.",
+      },
+    ]
+  : [
+      {
+        name: "Ayu F.",
+        role: "Traveler keluarga",
+        quote:
+          "Kamarnya bersih, suasananya tenang, dan anak-anak suka kolam renang. Rasanya seperti rumah yang nyaman untuk beristirahat dengan keluarga.",
+      },
+      {
+        name: "Rizky D.",
+        role: "Tamu akhir pekan",
+        quote:
+          "Cocok banget untuk staycation santai di Lebak. Lingkungannya tenang dan fasilitasnya sederhana tapi sangat praktis untuk perjalanan keluarga.",
+      },
+      {
+        name: "Siti M.",
+        role: "Tamu pasangan",
+        quote:
+          "Kami mencari tempat yang tenang untuk beristirahat dan menikmati akhir pekan. Olan Homestay memberi kami yang kami butuhkan: nyaman, bersih, dan mudah dijangkau.",
+      },
+    ];
+
+const stars = Array.from({ length: 5 });
+---
+
+<section
+  class="bg-surface border-border border-t"
+  aria-labelledby="customer-reviews-title"
+  data-slot="customer-reviews"
+  {...ed.entree}
+  style={styleDuBloc(Astro, "customer-reviews")}
+>
+  <Pastilles cle="customer-reviews" masquable />
+
+  <div class="container-page py-16 md:py-24">
+    <SectionHeader
+      as="h2"
+      edition={ed}
+      headingId="customer-reviews-title"
+      eyebrow={isEn ? "Testimonials" : "Testimoni"}
+      title={isEn ? "Guest reviews" : "Ulasan tamu"}
+      accentWord={isEn ? "reviews" : "tamu"}
+      lede={
+        isEn
+          ? "Comfort, calm, and easy family stays are the reason guests come back. Here is what they say about Olan Homestay."
+          : "Kenyamanan, ketenangan, dan pengalaman menginap yang mudah adalah alasan tamu kembali. Inilah yang mereka katakan tentang Olan Homestay."
+      }
+    />
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {
+        reviews.map((review) => (
+          <figure class="bg-card border-border flex h-full flex-col rounded-card border p-6 shadow-float">
+            <span class="sr-only">{isEn ? "5 out of 5 stars" : "5 dari 5 bintang"}</span>
+            <div class="mb-4 flex items-center gap-1 text-primary" aria-hidden="true">
+              {stars.map(() => (
+                <span aria-hidden="true" class="text-lg">★</span>
+              ))}
+            </div>
+
+            <blockquote class="text-foreground mt-2 text-lg leading-relaxed">
+              “{review.quote}”
+            </blockquote>
+
+            <figcaption class="mt-6 border-border border-t pt-4">
+              <div class="font-display text-foreground text-base font-semibold">{review.name}</div>
+              <div class="text-muted-foreground text-sm">{review.role}</div>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

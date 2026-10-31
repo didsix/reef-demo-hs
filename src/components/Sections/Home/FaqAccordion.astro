@@ -1,0 +1,111 @@
+---
+// src/components/Sections/Home/FaqAccordion.astro - FAQ de la page d'accueil avec accordions natives et accessibles.
+import SectionHeader from "@components/Sections/Global/SectionHeader.astro";
+import { getLocale } from "@i18n";
+import { annotationsDe, styleDuBloc } from "@moteur/annotations";
+import Pastilles from "@moteur/Pastilles.astro";
+
+const locale = getLocale(Astro);
+const ed = annotationsDe(Astro, "faq");
+const isEn = locale === "en";
+
+const faqs = isEn
+  ? [
+      {
+        question: "Is Olan Homestay suitable for families?",
+        answer:
+          "Yes. Olan Homestay is designed for relaxed family stays, with comfortable rooms, practical facilities, and a calm atmosphere that makes it easy to unwind.",
+      },
+      {
+        question: "Is it a good choice for a weekend getaway?",
+        answer:
+          "Absolutely. It is ideal for short escapes, quiet rest, and enjoying a simple, comfortable stay without the stress of a crowded destination.",
+      },
+      {
+        question: "Is there a pool area for children?",
+        answer:
+          "Yes. The pool area is a family-friendly space where children can enjoy a comfortable and safe place to play while parents relax nearby.",
+      },
+      {
+        question: "Is the location easy to reach?",
+        answer:
+          "Yes. Olan Homestay is easy to access for quick family trips or peaceful weekend stays in the Lebak area.",
+      },
+      {
+        question: "Is the place clean and comfortable?",
+        answer:
+          "Yes. Cleanliness and comfort are a priority, so guests can enjoy a calm and restful experience from check-in to check-out.",
+      },
+    ]
+  : [
+      {
+        question: "Apakah Olan Homestay cocok untuk keluarga?",
+        answer:
+          "Ya. Olan Homestay dirancang untuk menginap keluarga yang santai, dengan kamar nyaman, fasilitas yang praktis, dan suasana tenang yang membuat pengunjung lebih mudah bersantai.",
+      },
+      {
+        question: "Apakah cocok untuk liburan akhir pekan?",
+        answer:
+          "Sangat cocok. Tempat ini ideal untuk liburan singkat, beristirahat dengan tenang, dan menikmati menginap yang nyaman tanpa rasa terburu-buru.",
+      },
+      {
+        question: "Apakah ada area kolam untuk anak-anak?",
+        answer:
+          "Ya. Area kolam dibuat untuk keluarga, sehingga anak-anak bisa bermain dengan aman dan nyaman sambil orang tua bersantai di dekatnya.",
+      },
+      {
+        question: "Apakah lokasinya mudah dijangkau?",
+        answer:
+          "Ya. Olan Homestay mudah dijangkau untuk perjalanan keluarga singkat maupun staycation akhir pekan di area Lebak.",
+      },
+      {
+        question: "Apakah tempat ini bersih dan nyaman?",
+        answer:
+          "Ya. Kebersihan dan kenyamanan menjadi prioritas, sehingga tamu bisa menikmati pengalaman menginap yang tenang dan menyenangkan.",
+      },
+    ];
+---
+
+<section
+  class="bg-surface border-border border-t"
+  aria-labelledby="faq-title"
+  data-slot="faq"
+  {...ed.entree}
+  style={styleDuBloc(Astro, "faq")}
+>
+  <Pastilles cle="faq" masquable />
+
+  <div class="container-page py-16 md:py-24">
+    <SectionHeader
+      as="h2"
+      edition={ed}
+      headingId="faq-title"
+      eyebrow={isEn ? "FAQ" : "Pertanyaan umum"}
+      title={isEn ? "Frequently asked questions" : "Pertanyaan yang sering ditanya"}
+      accentWord={isEn ? "questions" : "ditanya"}
+      lede={
+        isEn
+          ? "Everything you need to know before planning a calm and comfortable stay with us."
+          : "Semua yang perlu Anda ketahui sebelum merencanakan menginap yang tenang dan nyaman bersama kami."
+      }
+    />
+
+    <div class="mt-10 space-y-4">
+      {
+        faqs.map((item, index) => (
+          <details class="bg-card border-border group rounded-card border" open={index === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left md:px-6 md:py-5">
+              <span class="text-foreground text-base font-medium md:text-lg">{item.question}</span>
+              <span class="text-muted-foreground text-2xl leading-none transition-transform duration-200 group-open:rotate-45" aria-hidden="true">
+                +
+              </span>
+            </summary>
+            <div class="text-muted-foreground border-border border-t px-5 py-4 text-[0.97rem] leading-relaxed md:px-6 md:py-5">
+              {item.answer}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

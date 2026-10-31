@@ -1,0 +1,176 @@
+---
+// src/components/Sections/Home/NewsletterInvite.astro - l'invitation a s'abonner : une scene sombre, la lettre a gauche, le flux a droite.
+//
+// C'est la deuxieme et derniere image de la page, et c'est voulu. La bande
+// precedente etait un formulaire pose sur un aplat gris, a un ton du fond de la
+// page : la seule section qui demande quelque chose au lecteur etait aussi la
+// plus discrete de l'accueil. Elle reprend donc le materiau du premier ecran,
+// halos compris, et referme la page sur la scene qui l'a ouverte.
+//
+// Les deux moyens sont montres ensemble a dessein. Une invitation qui ne propose
+// qu'une adresse email traite le flux comme un detail technique, alors que c'est
+// le seul abonnement qui ne demande rien au lecteur et ne coute rien a l'auteur.
+//
+// C'est aussi cette section qui porte id="newsletter", la cible du bouton
+// "S'abonner" de la barre. Le pied de page cede l'ancre et son formulaire des
+// que la page porte cette bande : deux formulaires identiques a deux ecrans
+// d'ecart, c'est une page qui bafouille.
+//
+// Le formulaire poste vers la lettre d'information du back office quand elle
+// est branchee (moteur allume, extension Courriels : inscription avec double
+// confirmation) ; sinon vers l'adresse externe reglee dans l'entree
+// "site" ; sinon nulle part (DEMONSTRATION : build statique, rien ne part).
+import { Icon } from "@components/svg/icons";
+import { Button } from "@components/ui/button";
+import { getSiteRoutes } from "@config/navData.json.ts";
+import { getLocale } from "@i18n";
+import { annotationsDe, styleDuBloc } from "@moteur/annotations";
+import { imageDe, lienDe } from "@moteur/cadre";
+import Pastilles from "@moteur/Pastilles.astro";
+import PhotoDuMoteur from "@moteur/PhotoDuMoteur.astro";
+import { Image } from "astro:assets";
+import heroVague from "../../../assets/reef-hero-vague.webp";
+
+const locale = getLocale(Astro);
+const isEn = locale === "en";
+const ed = annotationsDe(Astro, "lettre");
+const flux = annotationsDe(Astro, "lettre-flux");
+const routes = getSiteRoutes(locale);
+const photo = imageDe(Astro, "lettre");
+const bookingHref = lienDe(Astro, "lettre-flux", "cta_link") ?? routes.contact;
+
+const title = isEn ? "Your stay starts here" : "Liburan Anda dimulai di sini";
+const accent = isEn ? "stay" : "di sini";
+const at = title.toLowerCase().indexOf(accent.toLowerCase());
+const before = at >= 0 ? title.slice(0, at) : title;
+const word = at >= 0 ? title.slice(at, at + accent.length) : "";
+const after = at >= 0 ? title.slice(at + accent.length) : "";
+
+const primaryLabel = isEn ? "Check availability" : "Cek ketersediaan";
+const secondaryLabel = isEn ? "Plan your stay" : "Rencanakan menginap";
+const note = isEn
+  ? "Flexible check-in, a family-friendly stay, and a smooth welcome from the moment you arrive."
+  : "Check-in yang fleksibel, pengalaman menginap yang nyaman, dan sambutan hangat sejak kedatangan Anda.";
+const cardTitle = isEn ? "Plan your stay" : "Rencanakan menginap";
+const cardLede = isEn
+  ? "Choose your dates, confirm your room, and let us take care of the rest."
+  : "Pilih tanggal, konfirmasi kamar, dan biarkan kami mengurus sisanya.";
+const cardPrimary = isEn ? "Book now" : "Pesan sekarang";
+const cardSecondary = isEn ? "Ask a question" : "Tanya kami";
+---
+
+<div class="bg-surface p-2 sm:p-3 md:p-4" data-slot="newsletter-invite">
+  <section
+    class="deep-scene rounded-panel relative isolate overflow-hidden"
+    id="newsletter"
+    aria-labelledby="invite-title"
+    {...ed.entree}
+    style={styleDuBloc(Astro, "lettre")}
+  >
+    {
+      photo ? (
+        <PhotoDuMoteur
+          media={photo}
+          widths={[720, 1200, 1800]}
+          sizes="100vw"
+          class="pointer-events-none absolute inset-0 -z-30 size-full object-cover object-[center_78%]"
+          attributs={ed.champ("image")}
+        />
+      ) : (
+        <Image
+          src={heroVague}
+          alt=""
+          widths={[720, 1200, 1800]}
+          sizes="100vw"
+          loading="lazy"
+          decoding="async"
+          class="pointer-events-none absolute inset-0 -z-30 size-full object-cover object-[center_78%]"
+          aria-hidden="true"
+          {...ed.champ("image")}
+        />
+      )
+    }
+    <Pastilles cle="lettre" images={[{ champ: "image", sorte: "photo" }]} masquable />
+
+    <div class="invite-veil pointer-events-none absolute inset-0 -z-20" aria-hidden="true"></div>
+
+    <div class="container-page relative z-10 grid gap-12 py-16 md:py-24 lg:grid-cols-12 lg:gap-16">
+      <div class="flex flex-col gap-5 lg:col-span-7">
+        <span class="bg-primary h-0.5 w-12 rounded-pill" aria-hidden="true"></span>
+        <h2 id="invite-title" class="font-display text-display-sm md:text-display-md" {...ed.champ("title")}>
+          {
+            word ? (
+              <Fragment>
+                {before}
+                <span class="accent-script" {...ed.champ("accent")}>{word}</span>
+                {after}
+              </Fragment>
+            ) : (
+              title
+            )
+          }
+        </h2>
+        <p class="text-muted-foreground measure-wide text-lg leading-relaxed" {...ed.champ("lede")}>
+          {isEn
+            ? "A calm, comfortable place to rest, reconnect, and enjoy the rhythm of the island."
+            : "Tempat yang tenang dan nyaman untuk beristirahat, reconnect, dan menikmati ritme pulau."}
+        </p>
+
+        <div class="mt-2 flex flex-col gap-3 sm:max-w-xl sm:flex-row">
+          <Button href={bookingHref} variant="primary" size="lg" {...ed.champ("cta")}>
+            {primaryLabel}
+            <Icon name="arrow-right" size={17} />
+          </Button>
+          <Button href={routes.contact} variant="outline" size="lg">
+            {secondaryLabel}
+          </Button>
+        </div>
+
+        <p id="home-newsletter-note" class="text-muted-foreground text-sm" {...ed.champ("note")}>
+          {note}
+        </p>
+      </div>
+
+      <aside class="glass rounded-card flex flex-col gap-3 p-7 lg:col-span-5" {...flux.entree}>
+        <span class="text-accent-text" aria-hidden="true"><Icon name="arrow-up-right" size={22} /></span>
+        <h3 class="font-display text-xl font-bold tracking-tight" {...flux.champ("title")}>
+          {cardTitle}
+        </h3>
+        <p class="text-muted-foreground text-[0.95rem] leading-relaxed" {...flux.champ("lede")}>
+          {cardLede}
+        </p>
+        <Pastilles cle="lettre-flux" liens={[["cta_link", bookingHref]]} enLigne />
+        <div class="mt-auto flex flex-col gap-3 sm:flex-row lg:flex-col">
+          <Button href={bookingHref} variant="primary" size="md" class="self-start" {...flux.champ("cta")}>
+            {cardPrimary}
+          </Button>
+          <Button href={routes.contact} variant="outline" size="md" class="self-start">
+            {cardSecondary}
+          </Button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<style>
+  .invite-veil {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--reef-background) 94%, transparent) 0%,
+      color-mix(in oklab, var(--reef-background) 86%, transparent) 52%,
+      color-mix(in oklab, var(--reef-background) 42%, transparent) 100%
+    );
+  }
+
+  @media (max-width: 63.99rem) {
+    .invite-veil {
+      background: linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--reef-background) 92%, transparent) 0%,
+        color-mix(in oklab, var(--reef-background) 94%, transparent) 58%,
+        color-mix(in oklab, var(--reef-background) 84%, transparent) 100%
+      );
+    }
+  }
+</style>

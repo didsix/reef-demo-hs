@@ -1,0 +1,160 @@
+---
+// src/components/Sections/Home/GalleryStory.astro - galerie visuel editorial de l'accueil : vue exterieure, salon, salle TV, chambres et piscine.
+import SectionHeader from "@components/Sections/Global/SectionHeader.astro";
+import { getLocale } from "@i18n";
+import { annotationsDe, styleDuBloc } from "@moteur/annotations";
+import Pastilles from "@moteur/Pastilles.astro";
+import heroPreview from "@assets/reef-hero-vague.webp";
+import coverBudget from "@assets/covers/reef-budget-performance.webp";
+import coverCollections from "@assets/covers/reef-collections-contrat.webp";
+import coverScale from "@assets/covers/reef-echelle-typo.webp";
+import coverAges from "@assets/covers/reef-html-qui-vieillit.webp";
+
+const locale = getLocale(Astro);
+const ed = annotationsDe(Astro, "gallery-story");
+const isEn = locale === "en";
+
+const previewImages = [
+  heroPreview.src,
+  coverBudget.src,
+  coverCollections.src,
+  coverScale.src,
+  coverAges.src,
+];
+
+const spaces = isEn
+  ? [
+      {
+        title: "Front view",
+        note: "A warm welcome and a calm first impression.",
+        image: previewImages[0],
+        span: "md:col-span-7",
+      },
+      {
+        title: "Living room",
+        note: "Comfortable shared space for families and friends.",
+        image: previewImages[1],
+        span: "md:col-span-5",
+      },
+      {
+        title: "TV room",
+        note: "Relaxed evenings with a cozy atmosphere.",
+        image: previewImages[2],
+        span: "md:col-span-5",
+      },
+      {
+        title: "Bedroom 1",
+        note: "Clean, restful, and ready for a good night sleep.",
+        image: previewImages[3],
+        span: "md:col-span-7",
+      },
+      {
+        title: "Bedroom 2",
+        note: "Smart layout for couples and small families.",
+        image: previewImages[4],
+        span: "md:col-span-6",
+      },
+      {
+        title: "Kids pool",
+        note: "A playful corner for children to enjoy the weekend.",
+        image: previewImages[0],
+        span: "md:col-span-6",
+      },
+      {
+        title: "Kitchen",
+        note: "Practical space for simple daily comfort.",
+        image: previewImages[1],
+        span: "md:col-span-12",
+      },
+    ]
+  : [
+      {
+        title: "Tampak depan",
+        note: "Kesan ramah dan tenang di pintu masuk homestay.",
+        image: previewImages[0],
+        span: "md:col-span-7",
+      },
+      {
+        title: "Ruang tamu",
+        note: "Area santai untuk bersantai bersama keluarga.",
+        image: previewImages[1],
+        span: "md:col-span-5",
+      },
+      {
+        title: "Ruang TV",
+        note: "Suasana nyaman untuk malam santai di dalam rumah.",
+        image: previewImages[2],
+        span: "md:col-span-5",
+      },
+      {
+        title: "Kamar tidur 1",
+        note: "Ruang tidur yang bersih, tenang, dan nyaman.",
+        image: previewImages[3],
+        span: "md:col-span-7",
+      },
+      {
+        title: "Kamar tidur 2",
+        note: "Tata letak yang cocok untuk pasangan maupun keluarga kecil.",
+        image: previewImages[4],
+        span: "md:col-span-6",
+      },
+      {
+        title: "Kolam renang anak",
+        note: "Area bermain yang aman dan menyenangkan untuk anak.",
+        image: previewImages[0],
+        span: "md:col-span-6",
+      },
+      {
+        title: "Dapur",
+        note: "Fasilitas praktis untuk kenyamanan tinggal lebih lama.",
+        image: previewImages[1],
+        span: "md:col-span-12",
+      },
+    ];
+---
+
+<section
+  class="bg-surface border-border border-t"
+  aria-labelledby="gallery-story-title"
+  data-slot="gallery-story"
+  {...ed.entree}
+  style={styleDuBloc(Astro, "gallery-story")}
+>
+  <Pastilles cle="gallery-story" masquable />
+
+  <div class="container-page py-16 md:py-24">
+    <SectionHeader
+      as="h2"
+      edition={ed}
+      headingId="gallery-story-title"
+      eyebrow={isEn ? "Stay inside" : "Kenali tempatnya"}
+      title={isEn ? "A home that feels easy to stay in" : "Rumah yang terasa nyaman untuk tinggal lama"}
+      accentWord={isEn ? "easy" : "nyaman"}
+      lede={
+        isEn
+          ? "A warm look at the spaces that shape the stay, from the front yard to the family corners inside."
+          : "Tampilan hangat dari ruang-ruang yang membentuk pengalaman menginap, dari halaman depan hingga sudut keluarga di dalam rumah."
+      }
+    />
+
+    <div class="mt-10 grid gap-4 md:grid-cols-12">
+      {
+        spaces.map((space) => (
+          <article
+            class={`${space.span} group relative min-h-[18rem] overflow-hidden rounded-card border border-border bg-card shadow-float`}
+            style={`background-image: linear-gradient(180deg, rgba(15,23,42,0.14), rgba(15,23,42,0.72)), url("${space.image}"); background-size: cover; background-position: center;`}
+          >
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/78 via-slate-900/15 to-transparent" aria-hidden="true"></div>
+            <div class="relative flex h-full min-h-[18rem] flex-col justify-end p-5 md:p-6">
+              <p class="mb-2 text-[0.68rem] font-medium tracking-[0.18em] text-white/70 uppercase">
+                {isEn ? "Olan Homestay" : "Olan Homestay"}
+              </p>
+              <h3 class="font-display text-2xl font-semibold tracking-tight text-white">{space.title}</h3>
+              <p class="mt-2 max-w-md text-sm leading-relaxed text-white/80">{space.note}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
