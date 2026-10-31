@@ -16,16 +16,12 @@ const items = isEn
         details: ["Hair dryer", "Towels", "Bed sheets", "Soap", "Hangers"],
       },
       {
-        title: "Comfort & connectivity",
+        title: "Comfort & living",
         details: ["WiFi", "Air conditioning", "Smart TV", "Kitchen", "Fridge", "Cookware"],
       },
       {
-        title: "Safety & access",
-        details: ["CCTV", "Security cameras", "Garage", "Fence"],
-      },
-      {
-        title: "Family leisure",
-        details: ["Kids pool", "Lounge space"],
+        title: "Safety & leisure",
+        details: ["CCTV", "Security cameras", "Kids pool", "Garage", "Lounge space"],
       },
     ]
   : [
@@ -34,16 +30,12 @@ const items = isEn
         details: ["Hair dryer", "Handuk", "Seprai", "Sabun", "Gantungan baju"],
       },
       {
-        title: "Kenyamanan & konektivitas",
+        title: "Kenyamanan & hunian",
         details: ["Wifi", "Air conditioning / AC", "Smart TV", "Dapur", "Kulkas", "Peralatan masak"],
       },
       {
-        title: "Keamanan & akses",
-        details: ["CCTV", "Kamera keamanan", "Garasi", "Pagar"],
-      },
-      {
-        title: "Rekreasi keluarga",
-        details: ["Kolam renang anak", "Area santai"],
+        title: "Keamanan & rekreasi",
+        details: ["CCTV", "Kamera pengawas", "Kolam renang anak", "Garasi", "Area santai"],
       },
     ];
 ---
@@ -72,15 +64,18 @@ const items = isEn
       }
     />
 
-    <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
       {
-        items.map((item) => (
-          <article class="rounded-card border border-border bg-card p-5 shadow-float md:p-6">
+        items.map((item, index) => (
+          <article
+            class="group rounded-card border border-border bg-card p-5 shadow-float transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.28)] md:p-6"
+            style={`animation-delay: ${index * 80}ms`}
+          >
             <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">{item.title}</h3>
 
             <div class="mt-4 flex flex-wrap gap-2">
               {item.details.map((detail) => (
-                <span class="rounded-pill border border-border bg-surface px-2.5 py-1 text-[11px] font-medium tracking-[0.02em] text-muted-foreground">
+                <span class="rounded-pill border border-border bg-surface px-2.5 py-1 text-[11px] font-medium tracking-[0.02em] text-muted-foreground transition-colors duration-200 group-hover:border-primary/30 group-hover:text-foreground">
                   {detail}
                 </span>
               ))}
