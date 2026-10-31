@@ -1,13 +1,3 @@
----
-// src/pages/[...locale]/index.astro - l'accueil editorial : ouverture, billet a la une, notes recentes, sujets, signatures, mot du studio et invitation a s'abonner.
-//
-// L'accueil d'un blog n'est pas une page commerciale : il n'y a ni preuve sociale,
-// ni tarifs, ni bandeau de logos. Un lecteur arrive pour savoir s'il y a quelque
-// chose a lire, et la reponse doit tenir dans le premier ecran et demi.
-//
-// Toutes les listes sont calculees ICI, une seule fois. Les sections recoivent
-// des tableaux deja tries : aucune d'elles ne relit une collection, donc rien ne
-// peut trier differemment d'une section a l'autre.
 import CustomerReviews from "@components/Sections/Home/CustomerReviews.astro";
 import FaqAccordion from "@components/Sections/Home/FaqAccordion.astro";
 import Footer from "@components/Sections/Global/Footer.astro";
@@ -18,6 +8,7 @@ import FilmScene from "@components/Sections/Home/FilmScene.astro";
 import Hero from "@components/Sections/Home/Hero.astro";
 import LatestPosts from "@components/Sections/Home/LatestPosts.astro";
 import NewsletterInvite from "@components/Sections/Home/NewsletterInvite.astro";
+import TopicMarquee from "@components/Sections/Home/TopicMarquee.astro";
 import { getLocale, localePaths, locales, localizePath } from "@i18n";
 import { getResolvedPosts, getSortedTopics, getSortedAuthors } from "@js/posts";
 import { organization, website } from "@js/schema";
@@ -82,6 +73,7 @@ const voir = (slug: string): boolean => blocVisible(Astro, slug);
 const blocs = ordreDesBlocs(
   [
     "hero",
+    "bande-sujets",
     "a-la-une",
     "studio",
     "gallery-story",
@@ -128,6 +120,8 @@ const schemas = [
       blocs.map((bloc) =>
         bloc === "hero" ? (
           voir("hero") && <Hero {ledger} />
+        ) : bloc === "bande-sujets" ? (
+          voir("bande-sujets") && <TopicMarquee topics={topics} counts={topicCounts} />
         ) : bloc === "a-la-une" ? (
           featured && voir("a-la-une") && <FeaturedPost entry={featured} />
         ) : bloc === "studio" ? (
