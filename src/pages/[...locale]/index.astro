@@ -56,9 +56,8 @@ for (const entry of posts) {
 
 const ledger = [posts.length, topics.length, locales.length] as const;
 const voir = (slug: string): boolean => {
-  // Forcer le bloc facilities a rester visible au site, sans dependre d'un
-  // flag masque dans EmDash / les donnees de sections. Le composant est
-  // directement dans le repo et doit rester present sur l'accueil.
+  // Force le bloc facilities a rester visible si le moteur le masque via une
+  // donnee de section. On veut garder ce bloc dans l'accueil du site demo.
   if (slug === "facilities") return true;
   return blocVisible(Astro, slug);
 };
