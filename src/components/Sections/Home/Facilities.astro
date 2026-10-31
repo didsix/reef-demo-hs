@@ -16,15 +16,15 @@ const items = isEn
         title: "Bedroom and laundry",
         details: ["Towels", "Bed sheets", "Soap", "Toilet paper", "Hangers"],
       },
+      { title: "Living and entertainment", details: ["TV"] },
+      { title: "Comfort and connectivity", details: ["WiFi", "Air conditioning"] },
       {
         title: "Kitchen and dining",
-        details: ["Kitchen", "Refrigerator", "Cooking basics", "Pots and pans", "Oil", "Salt", "Pepper"],
+        details: ["Kitchen", "Refrigerator", "Cookware", "Oil", "Salt", "Pepper"],
       },
-      { title: "Internet and office", details: ["WiFi"] },
-      { title: "Heating and cooling", details: ["Air conditioning"] },
       {
         title: "Home safety",
-        details: ["Exterior security cameras", "Car garage", "Outside the house fence"],
+        details: ["Exterior security cameras", "Car garage", "Fenced perimeter"],
       },
       { title: "Parking and facilities", details: ["Pool"] },
     ]
@@ -34,13 +34,16 @@ const items = isEn
         title: "Kamar tidur & laundry",
         details: ["Handuk", "Seprai", "Sabun", "Tisu toilet", "Gantungan baju"],
       },
+      { title: "Ruang santai & hiburan", details: ["TV"] },
+      { title: "Kenyamanan & konektivitas", details: ["Wifi", "Air conditioning / AC"] },
       {
         title: "Dapur & makan",
-        details: ["Dapur", "Kulkas", "Peralatan masak", "Panci", "Minyak", "Garam", "Merica"],
+        details: ["Dapur", "Kulkas", "Peralatan masak", "Minyak", "Garam", "Merica"],
       },
-      { title: "Internet & kantor", details: ["Wifi"] },
-      { title: "Pemanas & pendingin", details: ["Air conditioning / AC"] },
-      { title: "Keamanan rumah", details: ["Kamera keamanan luar", "Garasi mobil", "Pagar luar rumah"] },
+      {
+        title: "Keamanan rumah",
+        details: ["Kamera keamanan luar", "Garasi mobil", "Pagar keliling"],
+      },
       { title: "Parkir & fasilitas", details: ["Kolam renang"] },
     ];
 ---
@@ -72,7 +75,7 @@ const items = isEn
     <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {
         items.map((item) => (
-          <article class="rounded-card border border-border bg-card p-5 shadow-float md:p-6">
+          <article class="rounded-card border border-border bg-card p-5 shadow-float transition-transform duration-200 hover:-translate-y-0.5 md:p-6">
             <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">{item.title}</h3>
             <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted-foreground md:text-[0.97rem]">
               {item.details.map((detail) => (
