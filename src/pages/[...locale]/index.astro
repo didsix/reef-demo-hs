@@ -30,11 +30,19 @@ export const getStaticPaths = localePaths;
 // ecrite dans le back office (collection "pages", src/moteur/pages.ts) : elle
 // est reecrite vers [...locale]/page-libre.astro, qui la rend avec le cadre du
 // site (ou repond 404). Moteur eteint, aucune.
-const demande = await propsDeLaPage(Astro, getStaticPaths);
-if (demande instanceof Response) {
-  const libre = adresseDePageLibre(Astro.params.locale);
-  if (!libre) return demande;
-  return Astro.rewrite(`${libre.locale === "en" ? "" : `/${libre.locale}`}/page-libre/`);
+const resolveFreePage = async () => {
+  const demande = await propsDeLaPage(Astro, getStaticPaths);
+  if (demande instanceof Response) {
+    const libre = adresseDePageLibre(Astro.params.locale);
+    if (!libre) return demande;
+    return Astro.rewrite(`${libre.locale === "en" ? "" : `/${libre.locale}`}/page-libre/`);
+  }
+  return null;
+};
+
+const rewriteResult = await resolveFreePage();
+if (rewriteResult) {
+  return rewriteResult;
 }
 
 const locale = getLocale(Astro);
