@@ -1,6 +1,15 @@
+---
+// src/pages/[...locale]/index.astro - l'accueil editorial : ouverture, billet a la une, notes recentes, sujets, signatures, mot du studio et invitation a s'abonner.
+//
+// L'accueil d'un blog n'est pas une page commerciale : il n'y a ni preuve sociale,
+// ni tarifs, ni bandeau de logos. Un lecteur arrive pour savoir s'il y a quelque
+// chose a lire, et la reponse doit tenir dans le premier ecran et demi.
+//
+// Toutes les listes sont calculees ICI, une seule fois. Les sections recoivent
+// des tableaux deja tries : aucune d'elles ne relit une collection, donc rien ne
+// peut trier differemment d'une section a l'autre.
 import CustomerReviews from "@components/Sections/Home/CustomerReviews.astro";
 import FaqAccordion from "@components/Sections/Home/FaqAccordion.astro";
-import Facilities from "@components/Sections/Home/Facilities.astro";
 import Footer from "@components/Sections/Global/Footer.astro";
 import GalleryStory from "@components/Sections/Home/GalleryStory.astro";
 import Navbar from "@components/Sections/Global/Navbar.astro";
@@ -34,19 +43,27 @@ const demande = await propsDeLaPage(Astro, getStaticPaths);
 if (demande instanceof Response) {
   const libre = adresseDePageLibre(Astro.params.locale);
   if (!libre) return demande;
-  const prefixe = libre.locale === "en" ? "" : `/${libre.locale}`;
-  return Astro.rewrite(`${prefixe}/page-libre/`);
+  return Astro.rewrite(`${libre.locale === "en" ? "" : `/${libre.locale}`}/page-libre/`);
 }
 
 const locale = getLocale(Astro);
+// Les textes rediges de la page : ceux de la base moteur allume (docs/moteur.md),
+// poses sur la requete pour ses composants.
 const t = await textesDeLaPage(Astro);
+
 const posts = await getResolvedPosts(locale);
+
+// Le garde-fou "un seul billet a la une" vit ici : le schema ne peut pas
+// compter les autres fichiers, mais la page les voit tous. Si personne n'a
+// leve le drapeau, le plus recent prend la place.
 const featured = posts.find((entry) => entry.post.data.featured) ?? posts.at(0);
 const latest = posts.filter((entry) => entry !== featured).slice(0, 6);
 
 const topics = await getSortedTopics(locale);
 const authors = await getSortedAuthors(locale);
 
+// Un seul passage sur les billets pour les deux compteurs : compter dans les
+// sections obligerait a leur passer la liste complete, qu'elles n'affichent pas.
 const topicCounts: Record<string, number> = {};
 const authorCounts: Record<string, number> = {};
 for (const entry of posts) {
@@ -54,13 +71,14 @@ for (const entry of posts) {
   authorCounts[entry.authorSlug] = (authorCounts[entry.authorSlug] ?? 0) + 1;
 }
 
+// Le compte de ce qu'il y a a lire, dans l'ordre des libelles de heroLedger :
+// notes publiees, fils, langues servies. Compte ici comme le reste, pour que
+// le hero n'ait aucune collection a relire.
 const ledger = [posts.length, topics.length, locales.length] as const;
-const voir = (slug: string): boolean => {
-  // Force le bloc facilities a rester visible si le moteur le masque via une
-  // donnee de section. On veut garder ce bloc dans l'accueil du site demo.
-  if (slug === "facilities") return true;
-  return blocVisible(Astro, slug);
-};
+
+// Chaque bloc de la page peut etre masque dans le back office (champ "hidden") ;
+// en mode edition, un bloc masque reste visible, estompe, avec sa pastille.
+const voir = (slug: string): boolean => blocVisible(Astro, slug);
 
 const blocs = ordreDesBlocs(
   [
@@ -69,7 +87,6 @@ const blocs = ordreDesBlocs(
     "a-la-une",
     "studio",
     "gallery-story",
-    "facilities",
     "dernieres-notes",
     "customer-reviews",
     "faq",
@@ -121,8 +138,6 @@ const schemas = [
           voir("studio") && <FilmScene />
         ) : bloc === "gallery-story" ? (
           voir("gallery-story") && <GalleryStory />
-        ) : bloc === "facilities" ? (
-          voir("facilities") && <Facilities />
         ) : bloc === "dernieres-notes" ? (
           latest.length > 0 && voir("dernieres-notes") && <LatestPosts posts={latest} />
         ) : bloc === "customer-reviews" ? (
