@@ -1,0 +1,117 @@
+---
+// src/components/Sections/Home/Facilities.astro - daftar fasilitas homestay di homepage.
+import SectionHeader from "@components/Sections/Global/SectionHeader.astro";
+import { getLocale } from "@i18n";
+import { annotationsDe, styleDuBloc } from "@moteur/annotations";
+import Pastilles from "@moteur/Pastilles.astro";
+
+const locale = getLocale(Astro);
+const ed = annotationsDe(Astro, "facilities");
+const isEn = locale === "en";
+
+const items = isEn
+  ? [
+      {
+        title: "Bathroom",
+        details: ["Hair dryer"],
+      },
+      {
+        title: "Bedroom and laundry",
+        details: ["Towels", "Bed sheets", "Soap", "Toilet paper", "Hangers"],
+      },
+      {
+        title: "Kitchen and dining",
+        details: ["Kitchen", "Refrigerator", "Cooking basics", "Pots and pans", "Oil", "Salt", "Pepper"],
+      },
+      {
+        title: "Internet and office",
+        details: ["WiFi"],
+      },
+      {
+        title: "Heating and cooling",
+        details: ["Air conditioning"],
+      },
+      {
+        title: "Home safety",
+        details: ["Exterior security cameras", "Car garage", "Outside the house fence"],
+      },
+      {
+        title: "Parking and facilities",
+        details: ["Pool"],
+      },
+    ]
+  : [
+      {
+        title: "Kamar mandi",
+        details: ["Hair dryer"],
+      },
+      {
+        title: "Kamar tidur & laundry",
+        details: ["Handuk", "Seprai", "Sabun", "Tisu toilet", "Gantungan baju"],
+      },
+      {
+        title: "Dapur & makan",
+        details: ["Dapur", "Kulkas", "Peralatan masak", "Panci", "Minyak", "Garam", "Merica"],
+      },
+      {
+        title: "Internet & kantor",
+        details: ["Wifi"],
+      },
+      {
+        title: "Pemanas & pendingin",
+        details: ["Air conditioning / AC"],
+      },
+      {
+        title: "Keamanan rumah",
+        details: ["Kamera keamanan luar", "Garasi mobil", "Pagar luar rumah"],
+      },
+      {
+        title: "Parkir & fasilitas",
+        details: ["Kolam renang"],
+      },
+    ];
+---
+
+<section
+  class="bg-surface border-border border-t"
+  aria-labelledby="facilities-title"
+  data-slot="facilities"
+  {...ed.entree}
+  style={styleDuBloc(Astro, "facilities")}
+>
+  <Pastilles cle="facilities" masquable />
+
+  <div class="container-page py-16 md:py-24">
+    <SectionHeader
+      as="h2"
+      edition={ed}
+      headingId="facilities-title"
+      eyebrow={isEn ? "Facilities" : "Fasilitas"}
+      title={isEn ? "Everything you need for a comfortable stay" : "Semua yang Anda butuhkan untuk menginap nyaman"}
+      accentWord={isEn ? "comfortable" : "nyaman"}
+      lede={
+        isEn
+          ? "A quick overview of the essentials and comfort features available during your stay."
+          : "Ikhtisar singkat tentang fasilitas penting dan kenyamanan yang tersedia selama menginap."
+      }
+    />
+
+    <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {
+        items.map((item) => (
+          <article class="border-border bg-card rounded-card border p-5 shadow-float md:p-6">
+            <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">{item.title}</h3>
+            <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted-foreground md:text-[0.97rem]">
+              {item.details.map((detail) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
