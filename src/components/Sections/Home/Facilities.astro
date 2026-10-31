@@ -11,90 +11,37 @@ const isEn = locale === "en";
 
 const items = isEn
   ? [
-      {
-        title: "Bathroom",
-        details: ["Hair dryer"],
-      },
+      { title: "Bathroom", details: ["Hair dryer"] },
       {
         title: "Bedroom and laundry",
         details: ["Towels", "Bed sheets", "Soap", "Toilet paper", "Hangers"],
       },
       {
-        title: "Entertainment",
-        details: ["TV"],
+        title: "Kitchen and dining",
+        details: ["Kitchen", "Refrigerator", "Cooking basics", "Pots and pans", "Oil", "Salt", "Pepper"],
       },
-      {
-        title: "Heating and cooling",
-        details: ["Air conditioning"],
-      },
+      { title: "Internet and office", details: ["WiFi"] },
+      { title: "Heating and cooling", details: ["Air conditioning"] },
       {
         title: "Home safety",
-        details: ["Exterior security cameras on property", "Car garage", "Outside the house fence"],
+        details: ["Exterior security cameras", "Car garage", "Outside the house fence"],
       },
-      {
-        title: "Internet and office",
-        details: ["Wifi"],
-      },
-      {
-        title: "Kitchen and dining",
-        details: [
-          "Kitchen",
-          "Space where guests can cook their own meals",
-          "Refrigerator",
-          "Cooking basics",
-          "Pots and pans",
-          "Oil",
-          "Salt",
-          "Pepper",
-        ],
-      },
-      {
-        title: "Parking and facilities",
-        details: ["Pool"],
-      },
+      { title: "Parking and facilities", details: ["Pool"] },
     ]
   : [
+      { title: "Kamar mandi", details: ["Hair dryer"] },
       {
-        title: "Kamar mandi",
-        details: ["Hair dryer"],
-      },
-      {
-        title: "Kamar tidur dan laundry",
+        title: "Kamar tidur & laundry",
         details: ["Handuk", "Seprai", "Sabun", "Tisu toilet", "Gantungan baju"],
       },
       {
-        title: "Hiburan",
-        details: ["TV"],
+        title: "Dapur & makan",
+        details: ["Dapur", "Kulkas", "Peralatan masak", "Panci", "Minyak", "Garam", "Merica"],
       },
-      {
-        title: "Pemanas dan pendingin",
-        details: ["Air conditioning / AC"],
-      },
-      {
-        title: "Keamanan rumah",
-        details: ["Kamera keamanan luar", "Garasi mobil", "Pagar luar rumah"],
-      },
-      {
-        title: "Internet dan kantor",
-        details: ["Wifi"],
-      },
-      {
-        title: "Dapur dan makan",
-        details: [
-          "Dapur",
-          "Area untuk memasak sendiri",
-          "Kulkas",
-          "Peralatan dasar",
-          "Panci dan wajan",
-          "Minyak",
-          "Garam",
-          "Merica",
-        ],
-      },
-      {
-        title: "Parkir dan fasilitas",
-        details: ["Kolam renang"],
-      },
+      { title: "Internet & kantor", details: ["Wifi"] },
+      { title: "Pemanas & pendingin", details: ["Air conditioning / AC"] },
+      { title: "Keamanan rumah", details: ["Kamera keamanan luar", "Garasi mobil", "Pagar luar rumah"] },
+      { title: "Parkir & fasilitas", details: ["Kolam renang"] },
     ];
 ---
 
@@ -112,13 +59,13 @@ const items = isEn
       as="h2"
       edition={ed}
       headingId="facilities-title"
-      eyebrow={isEn ? "Stay essentials" : "Fasilitas"}
-      title={isEn ? "What this place offers" : "Fasilitas yang tersedia"}
-      accentWord={isEn ? "offers" : "tersedia"}
+      eyebrow={isEn ? "Facilities" : "Fasilitas"}
+      title={isEn ? "Everything you need for a comfortable stay" : "Semua yang Anda butuhkan untuk menginap nyaman"}
+      accentWord={isEn ? "comfortable" : "nyaman"}
       lede={
         isEn
-          ? "Everything you need for a relaxed and comfortable stay."
-          : "Semua yang dibutuhkan untuk pengalaman menginap yang nyaman dan praktis."
+          ? "A quick overview of the essentials and comfort features available during your stay."
+          : "Ikhtisar singkat tentang fasilitas penting dan kenyamanan yang tersedia selama menginap."
       }
     />
 
@@ -126,10 +73,7 @@ const items = isEn
       {
         items.map((item) => (
           <article class="rounded-card border border-border bg-card p-5 shadow-float md:p-6">
-            <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">
-              {item.title}
-            </h3>
-
+            <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">{item.title}</h3>
             <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted-foreground md:text-[0.97rem]">
               {item.details.map((detail) => (
                 <li class="flex items-start gap-2">
