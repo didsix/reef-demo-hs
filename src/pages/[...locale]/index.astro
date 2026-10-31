@@ -18,6 +18,7 @@ import FilmScene from "@components/Sections/Home/FilmScene.astro";
 import Hero from "@components/Sections/Home/Hero.astro";
 import LatestPosts from "@components/Sections/Home/LatestPosts.astro";
 import NewsletterInvite from "@components/Sections/Home/NewsletterInvite.astro";
+import TopicMarquee from "@components/Sections/Home/TopicMarquee.astro";
 import { getLocale, localePaths, locales, localizePath } from "@i18n";
 import { getResolvedPosts, getSortedTopics, getSortedAuthors } from "@js/posts";
 import { organization, website } from "@js/schema";
@@ -82,6 +83,7 @@ const voir = (slug: string): boolean => blocVisible(Astro, slug);
 const blocs = ordreDesBlocs(
   [
     "hero",
+    "bande-sujets",
     "a-la-une",
     "studio",
     "gallery-story",
@@ -128,6 +130,8 @@ const schemas = [
       blocs.map((bloc) =>
         bloc === "hero" ? (
           voir("hero") && <Hero {ledger} />
+        ) : bloc === "bande-sujets" ? (
+          voir("bande-sujets") && <TopicMarquee topics={topics} counts={topicCounts} />
         ) : bloc === "a-la-une" ? (
           featured && voir("a-la-une") && <FeaturedPost entry={featured} />
         ) : bloc === "studio" ? (
