@@ -11,20 +11,32 @@ const isEn = locale === "en";
 
 const items = isEn
   ? [
-      { title: "Bathroom", details: ["Hair dryer"] },
-      { title: "Bedroom & laundry", details: ["Towels", "Bed sheets", "Soap", "Hangers"] },
-      { title: "Living & entertainment", details: ["TV", "Lounge space"] },
-      { title: "Comfort & connectivity", details: ["WiFi", "Air conditioning"] },
-      { title: "Kitchen & dining", details: ["Kitchen", "Fridge", "Cookware", "Oil", "Salt", "Pepper"] },
-      { title: "Safety & stay", details: ["Pool", "Security cameras", "Garage", "Fence"] },
+      {
+        title: "Stay essentials",
+        details: ["Hair dryer", "Towels", "Bed sheets", "Soap", "Hangers"],
+      },
+      {
+        title: "Comfort & convenience",
+        details: ["WiFi", "Air conditioning", "Kitchen", "Fridge", "Cookware"],
+      },
+      {
+        title: "Safety & leisure",
+        details: ["Pool", "Security cameras", "Garage", "Fence", "TV"],
+      },
     ]
   : [
-      { title: "Kamar mandi", details: ["Hair dryer"] },
-      { title: "Kamar tidur & laundry", details: ["Handuk", "Seprai", "Sabun", "Gantungan baju"] },
-      { title: "Ruang santai & hiburan", details: ["TV", "Area santai"] },
-      { title: "Kenyamanan & konektivitas", details: ["Wifi", "Air conditioning / AC"] },
-      { title: "Dapur & makan", details: ["Dapur", "Kulkas", "Peralatan masak", "Minyak", "Garam", "Merica"] },
-      { title: "Keamanan & stay", details: ["Kolam renang", "Kamera keamanan", "Garasi", "Pagar"] },
+      {
+        title: "Kebutuhan tinggal",
+        details: ["Hair dryer", "Handuk", "Seprai", "Sabun", "Gantungan baju"],
+      },
+      {
+        title: "Kenyamanan & praktis",
+        details: ["Wifi", "Air conditioning / AC", "Dapur", "Kulkas", "Peralatan masak"],
+      },
+      {
+        title: "Keamanan & hiburan",
+        details: ["Kolam renang", "Kamera keamanan", "Garasi", "Pagar", "TV"],
+      },
     ];
 ---
 
@@ -52,12 +64,13 @@ const items = isEn
       }
     />
 
-    <div class="mt-8 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
       {
         items.map((item) => (
-          <article class="rounded-card border border-border bg-card p-4 shadow-float md:p-5">
-            <h3 class="font-display text-lg tracking-tight text-foreground md:text-xl">{item.title}</h3>
-            <div class="mt-3 flex flex-wrap gap-2">
+          <article class="rounded-card border border-border bg-card p-5 shadow-float md:p-6">
+            <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">{item.title}</h3>
+
+            <div class="mt-4 flex flex-wrap gap-2">
               {item.details.map((detail) => (
                 <span class="rounded-pill border border-border bg-surface px-2.5 py-1 text-[11px] font-medium tracking-[0.02em] text-muted-foreground">
                   {detail}
