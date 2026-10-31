@@ -1,0 +1,91 @@
+---
+import SectionHeader from "@components/Sections/Global/SectionHeader.astro";
+import { getLocale } from "@i18n";
+import { annotationsDe, styleDuBloc } from "@moteur/annotations";
+import Pastilles from "@moteur/Pastilles.astro";
+
+const locale = getLocale(Astro);
+const ed = annotationsDe(Astro, "what-this-place-offers");
+const isEn = locale === "en";
+
+const items = isEn
+  ? [
+      "Wi‑Fi",
+      "Hair dryer",
+      "Towels",
+      "Bed sheets",
+      "Soap & toiletries",
+      "Hangers",
+      "Smart TV",
+      "Air conditioning",
+      "CCTV",
+      "Parking",
+      "Private garage",
+      "Fenced area",
+      "Kitchen",
+      "Refrigerator",
+      "Cooking basics",
+      "Pots & pans",
+      "Oil, salt & pepper",
+      "Pool",
+      "Laundry",
+      "Washing machine",
+    ]
+  : [
+      "Wi‑Fi",
+      "Hair dryer",
+      "Handuk",
+      "Seprai",
+      "Sabun & perlengkapan mandi",
+      "Hanger",
+      "TV pintar",
+      "Air conditioning",
+      "CCTV",
+      "Parkir",
+      "Garasi pribadi",
+      "Area berpagar",
+      "Dapur",
+      "Kulkas",
+      "Peralatan dasar",
+      "Panci & wajan",
+      "Minyak, garam & merica",
+      "Kolam renang",
+      "Laundry",
+      "Mesin cuci",
+    ];
+---
+<section
+  class="border-border border-t bg-surface"
+  aria-labelledby="what-this-place-offers-title"
+  data-slot="what-this-place-offers"
+  {...ed.entree}
+  style={styleDuBloc(Astro, "what-this-place-offers")}
+>
+  <Pastilles cle="what-this-place-offers" masquable />
+
+  <div class="container-page py-16 md:py-24">
+    <SectionHeader
+      as="h2"
+      edition={ed}
+      headingId="what-this-place-offers-title"
+      eyebrow={isEn ? "Stay essentials" : "Fasilitas"}
+      title={isEn ? "What this place offers" : "Fasilitas yang tersedia"}
+      accentWord={isEn ? "offers" : "tersedia"}
+      lede={
+        isEn
+          ? "Everything you need for a relaxed, practical stay."
+          : "Semua yang dibutuhkan untuk tinggal dengan nyaman dan praktis."
+      }
+    />
+
+    <ul class="mt-10 flex flex-wrap gap-2">
+      {
+        items.map((item) => (
+          <li class="rounded-full border border-border bg-card px-3 py-1.75 text-sm text-foreground shadow-float">
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
