@@ -34,7 +34,9 @@ const demande = await propsDeLaPage(Astro, getStaticPaths);
 if (demande instanceof Response) {
   const libre = adresseDePageLibre(Astro.params.locale);
   if (!libre) return demande;
-  return Astro.rewrite(`${libre.locale === "en" ? "" : `/${libre.locale}`}/page-libre/`);
+
+  const prefixe = libre.locale === "en" ? "" : `/${libre.locale}`;
+  return Astro.rewrite(`${prefixe}/page-libre/`);
 }
 
 const locale = getLocale(Astro);
