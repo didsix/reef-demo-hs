@@ -29,7 +29,7 @@ export const enChrome = {
     closeMenu: "Close menu",
     switchLanguage: "Change language",
     toggleTheme: "Toggle theme",
-    subscribe: "Subscribe",
+    subscribe: "Book",
   },
 
   // --- Pied de page --------------------------------------------------------
