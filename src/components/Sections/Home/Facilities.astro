@@ -16,12 +16,16 @@ const items = isEn
         details: ["Hair dryer", "Towels", "Bed sheets", "Soap", "Hangers"],
       },
       {
-        title: "Comfort & convenience",
-        details: ["WiFi", "Air conditioning", "Kitchen", "Fridge", "Cookware"],
+        title: "Comfort & connectivity",
+        details: ["WiFi", "Air conditioning", "Smart TV", "Kitchen", "Fridge", "Cookware"],
       },
       {
-        title: "Safety & leisure",
-        details: ["Pool", "Security cameras", "Garage", "Fence", "TV"],
+        title: "Safety & access",
+        details: ["CCTV", "Security cameras", "Garage", "Fence"],
+      },
+      {
+        title: "Family leisure",
+        details: ["Kids pool", "Lounge space"],
       },
     ]
   : [
@@ -30,12 +34,16 @@ const items = isEn
         details: ["Hair dryer", "Handuk", "Seprai", "Sabun", "Gantungan baju"],
       },
       {
-        title: "Kenyamanan & praktis",
-        details: ["Wifi", "Air conditioning / AC", "Dapur", "Kulkas", "Peralatan masak"],
+        title: "Kenyamanan & konektivitas",
+        details: ["Wifi", "Air conditioning / AC", "Smart TV", "Dapur", "Kulkas", "Peralatan masak"],
       },
       {
-        title: "Keamanan & hiburan",
-        details: ["Kolam renang", "Kamera keamanan", "Garasi", "Pagar", "TV"],
+        title: "Keamanan & akses",
+        details: ["CCTV", "Kamera keamanan", "Garasi", "Pagar"],
+      },
+      {
+        title: "Rekreasi keluarga",
+        details: ["Kolam renang anak", "Area santai"],
       },
     ];
 ---
@@ -64,7 +72,7 @@ const items = isEn
       }
     />
 
-    <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       {
         items.map((item) => (
           <article class="rounded-card border border-border bg-card p-5 shadow-float md:p-6">
