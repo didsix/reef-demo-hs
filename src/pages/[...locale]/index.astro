@@ -121,7 +121,7 @@ const schemas = [
         bloc === "hero" ? (
           voir("hero") && <Hero {ledger} />
         ) : bloc === "bande-sujets" ? (
-          voir("bande-sujets") && <TopicMarquee topics={topics} counts={topicCounts} />
+          topics.length > 0 && voir("bande-sujets") && <TopicMarquee topics={topics} counts={topicCounts} />
         ) : bloc === "a-la-une" ? (
           featured && voir("a-la-une") && <FeaturedPost entry={featured} />
         ) : bloc === "studio" ? (
