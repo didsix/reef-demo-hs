@@ -1,5 +1,5 @@
 ---
-// src/components/Sections/Home/Facilities.astro - daftar fasilitas homestay di homepage.
+// src/components/Sections/Home/Facilities.astro - liste des commodites de l'accueil en cartes custom.
 import SectionHeader from "@components/Sections/Global/SectionHeader.astro";
 import { getLocale } from "@i18n";
 import { annotationsDe, styleDuBloc } from "@moteur/annotations";
@@ -20,12 +20,8 @@ const items = isEn
         details: ["Towels", "Bed sheets", "Soap", "Toilet paper", "Hangers"],
       },
       {
-        title: "Kitchen and dining",
-        details: ["Kitchen", "Refrigerator", "Cooking basics", "Pots and pans", "Oil", "Salt", "Pepper"],
-      },
-      {
-        title: "Internet and office",
-        details: ["WiFi"],
+        title: "Entertainment",
+        details: ["TV"],
       },
       {
         title: "Heating and cooling",
@@ -33,7 +29,24 @@ const items = isEn
       },
       {
         title: "Home safety",
-        details: ["Exterior security cameras", "Car garage", "Outside the house fence"],
+        details: ["Exterior security cameras on property", "Car garage", "Outside the house fence"],
+      },
+      {
+        title: "Internet and office",
+        details: ["Wifi"],
+      },
+      {
+        title: "Kitchen and dining",
+        details: [
+          "Kitchen",
+          "Space where guests can cook their own meals",
+          "Refrigerator",
+          "Cooking basics",
+          "Pots and pans",
+          "Oil",
+          "Salt",
+          "Pepper",
+        ],
       },
       {
         title: "Parking and facilities",
@@ -46,19 +59,15 @@ const items = isEn
         details: ["Hair dryer"],
       },
       {
-        title: "Kamar tidur & laundry",
+        title: "Kamar tidur dan laundry",
         details: ["Handuk", "Seprai", "Sabun", "Tisu toilet", "Gantungan baju"],
       },
       {
-        title: "Dapur & makan",
-        details: ["Dapur", "Kulkas", "Peralatan masak", "Panci", "Minyak", "Garam", "Merica"],
+        title: "Hiburan",
+        details: ["TV"],
       },
       {
-        title: "Internet & kantor",
-        details: ["Wifi"],
-      },
-      {
-        title: "Pemanas & pendingin",
+        title: "Pemanas dan pendingin",
         details: ["Air conditioning / AC"],
       },
       {
@@ -66,14 +75,31 @@ const items = isEn
         details: ["Kamera keamanan luar", "Garasi mobil", "Pagar luar rumah"],
       },
       {
-        title: "Parkir & fasilitas",
+        title: "Internet dan kantor",
+        details: ["Wifi"],
+      },
+      {
+        title: "Dapur dan makan",
+        details: [
+          "Dapur",
+          "Area untuk memasak sendiri",
+          "Kulkas",
+          "Peralatan dasar",
+          "Panci dan wajan",
+          "Minyak",
+          "Garam",
+          "Merica",
+        ],
+      },
+      {
+        title: "Parkir dan fasilitas",
         details: ["Kolam renang"],
       },
     ];
 ---
 
 <section
-  class="bg-surface border-border border-t"
+  class="border-border border-t bg-surface"
   aria-labelledby="facilities-title"
   data-slot="facilities"
   {...ed.entree}
@@ -86,21 +112,24 @@ const items = isEn
       as="h2"
       edition={ed}
       headingId="facilities-title"
-      eyebrow={isEn ? "Facilities" : "Fasilitas"}
-      title={isEn ? "Everything you need for a comfortable stay" : "Semua yang Anda butuhkan untuk menginap nyaman"}
-      accentWord={isEn ? "comfortable" : "nyaman"}
+      eyebrow={isEn ? "Stay essentials" : "Fasilitas"}
+      title={isEn ? "What this place offers" : "Fasilitas yang tersedia"}
+      accentWord={isEn ? "offers" : "tersedia"}
       lede={
         isEn
-          ? "A quick overview of the essentials and comfort features available during your stay."
-          : "Ikhtisar singkat tentang fasilitas penting dan kenyamanan yang tersedia selama menginap."
+          ? "Everything you need for a relaxed and comfortable stay."
+          : "Semua yang dibutuhkan untuk pengalaman menginap yang nyaman dan praktis."
       }
     />
 
     <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {
         items.map((item) => (
-          <article class="border-border bg-card rounded-card border p-5 shadow-float md:p-6">
-            <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">{item.title}</h3>
+          <article class="rounded-card border border-border bg-card p-5 shadow-float md:p-6">
+            <h3 class="font-display text-xl tracking-tight text-foreground md:text-2xl">
+              {item.title}
+            </h3>
+
             <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted-foreground md:text-[0.97rem]">
               {item.details.map((detail) => (
                 <li class="flex items-start gap-2">
