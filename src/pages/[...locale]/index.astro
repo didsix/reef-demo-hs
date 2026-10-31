@@ -1,5 +1,6 @@
 import CustomerReviews from "@components/Sections/Home/CustomerReviews.astro";
 import FaqAccordion from "@components/Sections/Home/FaqAccordion.astro";
+import Facilities from "@components/Sections/Home/Facilities.astro";
 import Footer from "@components/Sections/Global/Footer.astro";
 import GalleryStory from "@components/Sections/Home/GalleryStory.astro";
 import Navbar from "@components/Sections/Global/Navbar.astro";
@@ -77,6 +78,7 @@ const blocs = ordreDesBlocs(
     "a-la-une",
     "studio",
     "gallery-story",
+    "facilities",
     "dernieres-notes",
     "customer-reviews",
     "faq",
@@ -128,6 +130,8 @@ const schemas = [
           voir("studio") && <FilmScene />
         ) : bloc === "gallery-story" ? (
           voir("gallery-story") && <GalleryStory />
+        ) : bloc === "facilities" ? (
+          voir("facilities") && <Facilities />
         ) : bloc === "dernieres-notes" ? (
           latest.length > 0 && voir("dernieres-notes") && <LatestPosts posts={latest} />
         ) : bloc === "customer-reviews" ? (
